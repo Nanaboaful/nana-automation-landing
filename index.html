@@ -3,862 +3,690 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Receptionist for Service Businesses — Never Miss a Call</title>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+    <title>NANA — AI Systems That Run While You Sleep</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #2563eb;
-            --primary-light: #3b82f6;
-            --primary-dark: #1d4ed8;
-            --accent: #f59e0b;
-            --success: #10b981;
-            --bg: #ffffff;
-            --bg-warm: #fefdfb;
-            --bg-soft: #f8fafc;
-            --text: #1e293b;
-            --text-light: #64748b;
-            --border: #e2e8f0;
+            --bg: #050505;
+            --bg-elevated: #0a0a0a;
+            --bg-card: #111111;
+            --text: #fafafa;
+            --text-muted: #888888;
+            --accent: #00f0ff;
+            --accent-glow: rgba(0, 240, 255, 0.3);
+            --amber: #ff9500;
+            --border: #222222;
+            --gradient-1: #00f0ff;
+            --gradient-2: #ff00aa;
         }
-        
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
-            font-family: 'DM Sans', sans-serif;
+            font-family: 'Space Grotesk', sans-serif;
             background: var(--bg);
             color: var(--text);
             line-height: 1.6;
+            overflow-x: hidden;
         }
-        
-        /* Smooth scroll */
-        html { scroll-behavior: smooth; }
-        
+
+        /* Animated grid background */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(0, 240, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 240, 255, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            pointer-events: none;
+            z-index: -1;
+        }
+
         /* Navigation */
         nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 24px 5%;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 20px 5%;
-            background: var(--bg);
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 100;
+            z-index: 1000;
+            background: linear-gradient(to bottom, var(--bg) 0%, transparent 100%);
         }
-        
+
         .logo {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--primary);
+            font-family: 'Syne', sans-serif;
+            font-size: 1.75rem;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            color: var(--text);
+            text-decoration: none;
         }
-        
+
+        .logo span {
+            color: var(--accent);
+        }
+
         .nav-links {
             display: flex;
-            gap: 32px;
+            gap: 48px;
             list-style: none;
         }
-        
+
         .nav-links a {
-            color: var(--text-light);
+            color: var(--text-muted);
             text-decoration: none;
             font-weight: 500;
-            transition: color 0.3s;
-        }
-        
-        .nav-links a:hover { color: var(--primary); }
-        
-        .nav-cta {
-            background: var(--primary);
-            color: white;
-            padding: 12px 24px;
-            border-radius: 8px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s;
-        }
-        
-        .nav-cta:hover {
-            background: var(--primary-dark);
-            transform: translateY(-2px);
-        }
-        
-        /* Hero */
-        .hero {
-            padding: 140px 5% 100px;
-            background: linear-gradient(135deg, var(--bg-warm) 0%, var(--bg-soft) 100%);
-            text-align: center;
-        }
-        
-        .hero h1 {
-            font-family: 'Playfair Display', serif;
-            font-size: clamp(2.5rem, 5vw, 4rem);
-            font-weight: 700;
-            line-height: 1.2;
-            margin-bottom: 24px;
-            color: var(--text);
-        }
-        
-        .hero h1 span {
-            color: var(--primary);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            transition: all 0.3s ease;
             position: relative;
         }
-        
-        .hero h1 span::after {
+
+        .nav-links a::after {
             content: '';
             position: absolute;
             bottom: -4px;
             left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--accent);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+
+        .nav-links a:hover::after {
             width: 100%;
-            height: 8px;
-            background: rgba(37, 99, 235, 0.2);
+        }
+
+        .nav-cta {
+            background: transparent;
+            color: var(--accent);
+            border: 1px solid var(--accent);
+            padding: 14px 28px;
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 600;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-cta::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: var(--accent);
+            transition: left 0.3s ease;
             z-index: -1;
         }
-        
-        .hero-subtitle {
-            font-size: 1.25rem;
-            color: var(--text-light);
-            max-width: 700px;
-            margin: 0 auto 40px;
+
+        .nav-cta:hover {
+            color: var(--bg);
         }
-        
-        .hero-cta {
+
+        .nav-cta:hover::before {
+            left: 0;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 120px 5% 80px;
+            position: relative;
+        }
+
+        .hero-badge {
             display: inline-flex;
             align-items: center;
-            gap: 12px;
-            background: var(--primary);
-            color: white;
-            padding: 18px 36px;
-            border-radius: 12px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 1.1rem;
-            transition: all 0.3s;
-            box-shadow: 0 4px 14px rgba(37, 99, 235, 0.3);
+            gap: 8px;
+            padding: 8px 16px;
+            background: rgba(0, 240, 255, 0.1);
+            border: 1px solid rgba(0, 240, 255, 0.2);
+            border-radius: 100px;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--accent);
+            margin-bottom: 32px;
+            width: fit-content;
         }
-        
-        .hero-cta:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(37, 99, 235, 0.4);
+
+        .hero-badge::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            background: var(--accent);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
         }
-        
-        /* Trust badges */
-        .trust-badges {
-            display: flex;
-            justify-content: center;
-            gap: 48px;
-            margin-top: 60px;
-            flex-wrap: wrap;
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
         }
-        
-        .badge {
-            text-align: center;
-        }
-        
-        .badge-number {
-            font-size: 2rem;
+
+        .hero h1 {
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(3rem, 8vw, 7rem);
             font-weight: 700;
-            color: var(--primary);
+            line-height: 0.95;
+            letter-spacing: -0.03em;
+            margin-bottom: 32px;
+            max-width: 900px;
         }
-        
-        .badge-label {
-            font-size: 0.875rem;
-            color: var(--text-light);
+
+        .hero h1 .gradient-text {
+            background: linear-gradient(135deg, var(--accent) 0%, var(--gradient-2) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
-        
-        /* Problem Section */
-        .problem {
-            padding: 100px 5%;
-            background: white;
+
+        .hero-subtitle {
+            font-size: 1.35rem;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin-bottom: 48px;
+            line-height: 1.7;
         }
-        
-        .section-title {
+
+        .hero-cta-group {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .hero-cta-primary {
+            background: var(--accent);
+            color: var(--bg);
+            padding: 20px 40px;
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 600;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 40px var(--accent-glow);
+        }
+
+        .hero-cta-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 60px var(--accent-glow);
+        }
+
+        .hero-cta-secondary {
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: gap 0.3s ease;
+        }
+
+        .hero-cta-secondary:hover {
+            gap: 12px;
+            color: var(--accent);
+        }
+
+        /* Stats Bar */
+        .stats-bar {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1px;
+            background: var(--border);
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .stat-item {
+            background: var(--bg);
+            padding: 48px 24px;
             text-align: center;
-            margin-bottom: 60px;
         }
-        
-        .section-title h2 {
-            font-family: 'Playfair Display', serif;
-            font-size: 2.5rem;
+
+        .stat-number {
+            font-family: 'Syne', sans-serif;
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--accent);
+            display: block;
+            line-height: 1;
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--text-muted);
+            margin-top: 8px;
+        }
+
+        /* Section Styles */
+        section {
+            padding: 120px 5%;
+        }
+
+        .section-header {
+            margin-bottom: 80px;
+        }
+
+        .section-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            color: var(--accent);
             margin-bottom: 16px;
         }
-        
-        .section-title p {
-            color: var(--text-light);
-            font-size: 1.1rem;
+
+        .section-title {
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(2rem, 5vw, 4rem);
+            font-weight: 700;
+            line-height: 1.1;
+            max-width: 700px;
         }
-        
+
+        /* Problem Section */
         .problem-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 32px;
-            max-width: 1200px;
-            margin: 0 auto;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
         }
-        
+
         .problem-card {
-            padding: 32px;
-            background: var(--bg-soft);
-            border-radius: 16px;
+            background: var(--bg-card);
             border: 1px solid var(--border);
-            transition: all 0.3s;
+            padding: 48px 32px;
+            transition: all 0.3s ease;
         }
-        
+
         .problem-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 12px 40px rgba(0,0,0,0.08);
+            border-color: var(--accent);
+            transform: translateY(-8px);
         }
-        
+
         .problem-icon {
-            width: 56px;
-            height: 56px;
-            background: white;
-            border-radius: 12px;
+            width: 48px;
+            height: 48px;
+            background: rgba(0, 240, 255, 0.1);
+            border: 1px solid rgba(0, 240, 255, 0.2);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.75rem;
-            margin-bottom: 20px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            font-size: 1.5rem;
+            margin-bottom: 24px;
         }
-        
+
         .problem-card h3 {
+            font-family: 'Syne', sans-serif;
             font-size: 1.25rem;
             margin-bottom: 12px;
         }
-        
+
         .problem-card p {
-            color: var(--text-light);
-        }
-        
-        /* Solution */
-        .solution {
-            padding: 100px 5%;
-            background: linear-gradient(180deg, var(--bg-soft) 0%, white 100%);
-        }
-        
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 24px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        
-        .feature-card {
-            background: white;
-            padding: 32px;
-            border-radius: 16px;
-            border: 1px solid var(--border);
-            transition: all 0.3s;
-        }
-        
-        .feature-card:hover {
-            border-color: var(--primary);
-            box-shadow: 0 8px 30px rgba(37, 99, 235, 0.1);
-        }
-        
-        .feature-icon {
-            width: 48px;
-            height: 48px;
-            background: rgba(37, 99, 235, 0.1);
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            margin-bottom: 20px;
-        }
-        
-        .feature-card h3 {
-            font-size: 1.15rem;
-            margin-bottom: 10px;
-        }
-        
-        .feature-card p {
-            color: var(--text-light);
+            color: var(--text-muted);
             font-size: 0.95rem;
+            line-height: 1.7;
         }
-        
-        /* Testimonial */
-        .testimonial {
-            padding: 100px 5%;
-            background: var(--bg-warm);
+
+        /* Solution Section */
+        .solution {
+            background: var(--bg-elevated);
         }
-        
-        .testimonial-card {
-            max-width: 800px;
-            margin: 0 auto;
-            background: white;
-            padding: 48px;
-            border-radius: 20px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
-            text-align: center;
+
+        .solution-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 64px;
+            align-items: center;
         }
-        
-        .quote {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.5rem;
-            font-style: italic;
-            color: var(--text);
+
+        .solution-content h2 {
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(2rem, 4vw, 3rem);
             margin-bottom: 24px;
-            line-height: 1.6;
+            line-height: 1.2;
         }
-        
-        .testimonial-author {
+
+        .solution-content p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 32px;
+        }
+
+        .feature-list {
+            list-style: none;
+        }
+
+        .feature-list li {
+            padding: 16px 0;
+            border-bottom: 1px solid var(--border);
             display: flex;
             align-items: center;
-            justify-content: center;
             gap: 16px;
         }
-        
-        .author-avatar {
-            width: 56px;
-            height: 56px;
-            background: var(--primary-light);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: 700;
-            font-size: 1.25rem;
-        }
-        
-        .author-info {
-            text-align: left;
-        }
-        
-        .author-name {
+
+        .feature-list li::before {
+            content: '→';
+            color: var(--accent);
             font-weight: 700;
         }
-        
-        .author-title {
-            color: var(--text-light);
-            font-size: 0.875rem;
-        }
-        
-        /* ROI Section */
-        .roi {
-            padding: 100px 5%;
-            background: white;
-            text-align: center;
-        }
-        
-        .roi-box {
-            display: inline-block;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-            color: white;
-            padding: 48px 64px;
-            border-radius: 20px;
-            margin-top: 40px;
-        }
-        
-        .roi-label {
-            font-size: 1rem;
-            opacity: 0.9;
-            margin-bottom: 8px;
-        }
-        
-        .roi-value {
-            font-size: 3.5rem;
-            font-weight: 700;
-        }
-        
-        .roi-sublabel {
-            font-size: 1rem;
-            opacity: 0.9;
-            margin-top: 8px;
-        }
-        
-        /* CTA Section */
-        .cta-section {
-            padding: 100px 5%;
-            background: linear-gradient(180deg, var(--bg-soft) 0%, var(--bg-warm) 100%);
-        }
-        
-        .form-container {
-            max-width: 500px;
-            margin: 0 auto;
-            background: white;
+
+        .solution-visual {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
             padding: 48px;
-            border-radius: 20px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            position: relative;
         }
-        
-        .form-group {
+
+        .solution-visual::before {
+            content: '';
+            position: absolute;
+            top: -1px;
+            left: -1px;
+            right: -1px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent), transparent);
+        }
+
+        /* CTA Section */
+        .cta {
+            text-align: center;
+            background: linear-gradient(180deg, var(--bg) 0%, var(--bg-elevated) 100%);
+        }
+
+        .cta h2 {
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(2.5rem, 6vw, 5rem);
             margin-bottom: 24px;
         }
-        
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 500;
+
+        .cta p {
+            color: var(--text-muted);
+            font-size: 1.25rem;
+            max-width: 600px;
+            margin: 0 auto 48px;
+        }
+
+        .cta-form {
+            max-width: 500px;
+            margin: 0 auto;
+            display: flex;
+            gap: 12px;
+        }
+
+        .cta-form input {
+            flex: 1;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            padding: 18px 24px;
             color: var(--text);
-        }
-        
-        .form-group input {
-            width: 100%;
-            padding: 14px 16px;
-            border: 2px solid var(--border);
-            border-radius: 10px;
+            font-family: 'Space Grotesk', sans-serif;
             font-size: 1rem;
-            transition: border-color 0.3s;
-        }
-        
-        .form-group input:focus {
             outline: none;
-            border-color: var(--primary);
+            transition: border-color 0.3s ease;
         }
-        
-        .submit-btn {
-            width: 100%;
-            padding: 16px;
-            background: var(--primary);
-            color: white;
+
+        .cta-form input:focus {
+            border-color: var(--accent);
+        }
+
+        .cta-form input::placeholder {
+            color: var(--text-muted);
+        }
+
+        .cta-form button {
+            background: var(--accent);
+            color: var(--bg);
             border: none;
-            border-radius: 10px;
-            font-size: 1.1rem;
+            padding: 18px 32px;
+            font-family: 'Space Grotesk', sans-serif;
             font-weight: 600;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
             cursor: pointer;
-            transition: all 0.3s;
+            transition: all 0.3s ease;
         }
-        
-        .submit-btn:hover {
-            background: var(--primary-dark);
-            transform: translateY(-2px);
+
+        .cta-form button:hover {
+            box-shadow: 0 0 40px var(--accent-glow);
         }
-        
-        /* Chat Widget */
-        .chat-widget {
-            position: fixed;
-            bottom: 24px;
-            right: 24px;
-            width: 380px;
-            max-height: 500px;
-            background: white;
-            border-radius: 16px;
-            box-shadow: 0 8px 40px rgba(0,0,0,0.15);
-            z-index: 1000;
-            overflow: hidden;
-            display: none;
-        }
-        
-        .chat-widget.active {
-            display: block;
-            animation: slideUp 0.3s ease-out;
-        }
-        
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        .chat-header {
-            background: var(--primary);
-            color: white;
-            padding: 16px 20px;
+
+        /* Footer */
+        footer {
+            padding: 48px 5%;
+            border-top: 1px solid var(--border);
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
-        
-        .chat-title {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-weight: 600;
-        }
-        
-        .chat-status {
-            width: 8px;
-            height: 8px;
-            background: #10b981;
-            border-radius: 50%;
-            animation: pulse 2s infinite;
-        }
-        
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
-        }
-        
-        .chat-close {
-            background: none;
-            border: none;
-            color: white;
-            font-size: 1.5rem;
-            cursor: pointer;
-        }
-        
-        .chat-messages {
-            height: 320px;
-            overflow-y: auto;
-            padding: 20px;
-            background: var(--bg-soft);
-        }
-        
-        .chat-message {
-            margin-bottom: 16px;
-            animation: fadeIn 0.3s ease-out;
-        }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        .chat-message.bot {
-            text-align: left;
-        }
-        
-        .chat-bubble {
-            display: inline-block;
-            padding: 12px 16px;
-            border-radius: 16px;
-            max-width: 85%;
-            font-size: 0.95rem;
-            line-height: 1.5;
-        }
-        
-        .chat-message.bot .chat-bubble {
-            background: white;
-            border: 1px solid var(--border);
-            color: var(--text);
-        }
-        
-        .chat-input-area {
-            padding: 16px;
-            background: white;
-            border-top: 1px solid var(--border);
-            display: flex;
-            gap: 10px;
-        }
-        
-        .chat-input {
-            flex: 1;
-            padding: 12px 16px;
-            border: 2px solid var(--border);
-            border-radius: 24px;
-            font-size: 0.95rem;
-        }
-        
-        .chat-input:focus {
-            outline: none;
-            border-color: var(--primary);
-        }
-        
-        .chat-send {
-            width: 44px;
-            height: 44px;
-            background: var(--primary);
-            color: white;
-            border: none;
-            border-radius: 50%;
-            cursor: pointer;
+
+        .footer-logo {
+            font-family: 'Syne', sans-serif;
+            font-weight: 700;
             font-size: 1.25rem;
-            transition: all 0.3s;
         }
-        
-        .chat-send:hover {
-            background: var(--primary-dark);
+
+        .footer-logo span {
+            color: var(--accent);
         }
-        
-        .chat-toggle {
-            position: fixed;
-            bottom: 24px;
-            right: 24px;
-            width: 60px;
-            height: 60px;
-            background: var(--primary);
-            color: white;
-            border: none;
-            border-radius: 50%;
-            font-size: 1.5rem;
-            cursor: pointer;
-            box-shadow: 0 4px 20px rgba(37, 99, 235, 0.3);
-            z-index: 999;
-            transition: all 0.3s;
+
+        .footer-links {
+            display: flex;
+            gap: 32px;
+            list-style: none;
         }
-        
-        .chat-toggle:hover {
-            transform: scale(1.1);
-            box-shadow: 0 6px 25px rgba(37, 99, 235, 0.4);
+
+        .footer-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.85rem;
+            transition: color 0.3s ease;
         }
-        
-        /* Footer */
-        footer {
-            padding: 40px 5%;
-            background: var(--text);
-            color: white;
-            text-align: center;
+
+        .footer-links a:hover {
+            color: var(--accent);
         }
-        
-        footer p {
-            opacity: 0.7;
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .problem-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .solution-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .stats-bar {
+                grid-template-columns: repeat(2, 1fr);
+            }
         }
-        
-        /* Mobile */
+
         @media (max-width: 768px) {
-            .nav-links { display: none; }
-            .hero { padding: 120px 5% 80px; }
-            .hero h1 { font-size: 2rem; }
-            .chat-widget {
-                width: calc(100% - 48px);
-                right: 24px;
-                left: 24px;
+            .nav-links {
+                display: none;
+            }
+            
+            .stats-bar {
+                grid-template-columns: 1fr;
+            }
+            
+            .hero-cta-group {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .cta-form {
+                flex-direction: column;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Navigation -->
     <nav>
-        <div class="logo">Nana Automation</div>
+        <a href="#" class="logo">NANA<span>.</span></a>
         <ul class="nav-links">
             <li><a href="#problem">The Problem</a></li>
-            <li><a href="#solution">How It Works</a></li>
+            <li><a href="#solution">Our Solution</a></li>
             <li><a href="#results">Results</a></li>
         </ul>
-        <a href="#contact" class="nav-cta">Get Started</a>
+        <a href="#contact" class="nav-cta">Start Building</a>
     </nav>
 
-    <!-- Hero -->
     <section class="hero">
-        <h1>An AI Receptionist That Works<br>While You <span>Focus on the Job</span></h1>
-        <p class="hero-subtitle">Stop missing calls. Stop losing jobs. Our AI answers 24/7, books appointments, and qualifies leads — so you can do what you do best.</p>
-        <a href="#contact" class="hero-cta">See If You Qualify →</a>
-        
-        <div class="trust-badges">
-            <div class="badge">
-                <div class="badge-number">67%</div>
-                <div class="badge-label">of callers hang up<br>on voicemail</div>
-            </div>
-            <div class="badge">
-                <div class="badge-number">24/7</div>
-                <div class="badge-label">availability<br>no missed calls</div>
-            </div>
-            <div class="badge">
-                <div class="badge-number">12+</div>
-                <div class="badge-label">extra jobs<br>per month</div>
-            </div>
+        <div class="hero-badge">
+            Now Accepting 3 New Brand Partners
+        </div>
+        <h1>
+            AI Systems That
+            <span class="gradient-text">Run While You Sleep</span>
+        </h1>
+        <p class="hero-subtitle">
+            We build autonomous AI infrastructure for brands. Lead generation, content creation, and customer engagement — fully automated and running 24/7.
+        </p>
+        <div class="hero-cta-group">
+            <a href="#contact" class="hero-cta-primary">Book a Strategy Call</a>
+            <a href="#solution" class="hero-cta-secondary">See How It Works →</a>
         </div>
     </section>
 
-    <!-- Problem -->
-    <section class="problem" id="problem">
-        <div class="section-title">
-            <h2>The Problem Every Service Business Faces</h2>
-            <p>You're great at your craft. But the phone is killing your growth.</p>
+    <div class="stats-bar">
+        <div class="stat-item">
+            <span class="stat-number">10K+</span>
+            <div class="stat-label">Leads Generated</div>
         </div>
-        <div class="problem-grid">
-            <div class="problem-card">
-                <div class="problem-icon">😰</div>
-                <h3>Emergency Calls Go to Voicemail</h3>
-                <p>When someone's pipe bursts at 2 AM, they call the first person who answers. If that's not you, they move on. 67% never leave a message.</p>
-            </div>
-            <div class="problem-card">
-                <div class="problem-icon">⏰</div>
-                <h3>You're On a Job, Missing Jobs</h3>
-                <p>Hands full, can't answer. Every missed call is a $400-$1,200 job walking to your competitor. This happens 5-10 times a day.</p>
-            </div>
-            <div class="problem-card">
-                <div class="problem-icon">🔄</div>
-                <h3>Time Wasted on Tire-Kickers</h3>
-                <p>You spend 20 minutes on the phone only to find out they're outside your service area or can't afford your rates.</p>
-            </div>
+        <div class="stat-item">
+            <span class="stat-number">$0</span>
+            <div class="stat-label">Ad Spend</div>
         </div>
-    </section>
-
-    <!-- Solution -->
-    <section class="solution" id="solution">
-        <div class="section-title">
-            <h2>Meet Your New AI Receptionist</h2>
-            <p>Trained specifically for service businesses. Handles the calls so you handle the jobs.</p>
+        <div class="stat-item">
+            <span class="stat-number">24/7</span>
+            <div class="stat-label">Always Running</div>
         </div>
-        <div class="features-grid">
-            <div class="feature-card">
-                <div class="feature-icon">📞</div>
-                <h3>Answers Every Call Instantly</h3>
-                <p>24/7 availability. No more missed opportunities. Customers reach a friendly AI that sounds human and understands their needs.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">📅</div>
-                <h3>Books Appointments Automatically</h3>
-                <p>Checks your calendar in real-time. Schedules jobs during your available slots. Syncs with Google Calendar.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">🎯</div>
-                <h3>Qualifies Leads Before You Talk</h3>
-                <p>Asks the right questions: location, urgency, job type, budget. Only schedules calls with serious prospects.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">💬</div>
-                <h3>Confirms & Reminds</h3>
-                <p>Automatically sends confirmation texts, appointment reminders, and follow-ups. Reduces no-shows by 40%.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">📊</div>
-                <h3>Tracks Everything</h3>
-                <p>See call volume, peak times, missed opportunities, and conversion rates. Know exactly how your business is doing.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">⚡</div>
-                <h3>Knows Your Trade</h3>
-                <p>Plumbing, HVAC, electrical, handyman — the AI speaks your language and understands the urgency of each situation.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Testimonial -->
-    <section class="testimonial">
-        <div class="section-title">
-            <h2>Real Results from Real Businesses</h2>
-        </div>
-        <div class="testimonial-card">
-            <p class="quote">"Before the AI receptionist, I was missing 3-4 calls a day while I was on jobs. In the first month, I booked 12 additional appointments I would have lost. It paid for itself in week one."</p>
-            <div class="testimonial-author">
-                <div class="author-avatar">M</div>
-                <div class="author-info">
-                    <div class="author-name">Mike Rodriguez</div>
-                    <div class="author-title">Owner, Rodriguez Plumbing — Houston, TX</div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ROI -->
-    <section class="roi" id="results">
-        <div class="section-title">
-            <h2>The Math That Matters</h2>
-            <p>Most businesses recover their investment with just ONE additional job per month.</p>
-        </div>
-        <div class="roi-box">
-            <div class="roi-label">Average Additional Monthly Revenue</div>
-            <div class="roi-value">$6,800+</div>
-            <div class="roi-sublabel">Based on 12 extra jobs at $567 average</div>
-        </div>
-    </section>
-
-    <!-- CTA -->
-    <section class="cta-section" id="contact">
-        <div class="section-title">
-            <h2>Ready to Stop Missing Calls?</h2>
-            <p>We're only accepting 5 new service businesses this month. No setup fee. 30-day trial.</p>
-        </div>
-        <div class="form-container">
-            <form id="leadForm">
-                <div class="form-group">
-                    <label>Your Phone Number</label>
-                    <input type="tel" id="phone" placeholder="(555) 123-4567" required>
-                </div>
-                <div class="form-group">
-                    <label>Business Name</label>
-                    <input type="text" id="business" placeholder="Your Company Name" required>
-                </div>
-                <button type="submit" class="submit-btn">Check Availability</button>
-            </form>
-            <p style="text-align: center; margin-top: 16px; color: var(--text-light); font-size: 0.875rem;">We'll call you within 24 hours. No spam. Cancel anytime.</p>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer>
-        <p>© 2026 Nana Automation. Helping service businesses grow with AI.</p>
-    </footer>
-
-    <!-- Chat Widget -->
-    <button class="chat-toggle" onclick="toggleChat()">💬</button>
-    
-    <div class="chat-widget" id="chatWidget">
-        <div class="chat-header">
-            <div class="chat-title">
-                <div class="chat-status"></div>
-                AI Assistant
-            </div>
-            <button class="chat-close" onclick="toggleChat()">×</button>
-        </div>
-        <div class="chat-messages" id="chatMessages">
-            <div class="chat-message bot">
-                <div class="chat-bubble">Hi there! 👋 I can help you learn about our AI Receptionist. What questions do you have?</div>
-            </div>
-        </div>
-        <div class="chat-input-area">
-            <input type="text" class="chat-input" id="chatInput" placeholder="Type your question..." onkeypress="handleKeyPress(event)">
-            <button class="chat-send" onclick="sendMessage()">→</button>
+        <div class="stat-item">
+            <span class="stat-number">3</span>
+            <div class="stat-label">Spots Available</div>
         </div>
     </div>
 
-    <script>
-        // Chat functionality
-        function toggleChat() {
-            document.getElementById('chatWidget').classList.toggle('active');
-        }
-        
-        function handleKeyPress(e) {
-            if (e.key === 'Enter') sendMessage();
-        }
-        
-        function sendMessage() {
-            const input = document.getElementById('chatInput');
-            const message = input.value.trim();
-            if (!message) return;
-            
-            // Add user message
-            addMessage(message, 'user');
-            input.value = '';
-            
-            // Bot response
-            setTimeout(() => {
-                const response = getBotResponse(message.toLowerCase());
-                addMessage(response, 'bot');
-            }, 1000);
-        }
-        
-        function addMessage(text, sender) {
-            const container = document.getElementById('chatMessages');
-            const div = document.createElement('div');
-            div.className = 'chat-message ' + sender;
-            div.innerHTML = '<div class="chat-bubble">' + text + '</div>';
-            container.appendChild(div);
-            container.scrollTop = container.scrollHeight;
-        }
-        
-        function getBotResponse(msg) {
-            if (msg.includes('price') || msg.includes('cost') || msg.includes('how much')) {
-                return "Our AI Receptionist starts at \$297/month with no setup fee. Most businesses recover this cost with just one additional job. Would you like to see a personalized ROI calculation?";
-            }
-            if (msg.includes('work') || msg.includes('how') || msg.includes('what')) {
-                return "Our AI answers your business calls 24/7, qualifies leads, books appointments, and sends follow-up texts. It integrates with your existing calendar and can handle multiple calls at once. Want to see a demo?";
-            }
-            if (msg.includes('trial') || msg.includes('test')) {
-                return "Yes! We offer a 30-day trial with free setup. You only pay if you see results. Want to schedule a quick call to get started?";
-            }
-            if (msg.includes('plumb') || msg.includes('hvac') || msg.includes('electric')) {
-                return "We specialize in service businesses like yours! Our AI is trained to handle emergency calls, book appointments, and understand the urgency of different situations. Many " + msg.match(/\w+/)[0] + " companies see 10-15 additional jobs per month.";
-            }
-            return "Great question! I'd love to show you exactly how this works for your specific business. Can you share your phone number? I'll have our team call you within 24 hours with a personalized demo.";
-        }
-        
-        // Form submission
-        document.getElementById('leadForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const phone = document.getElementById('phone').value;
-            const business = document.getElementById('business').value;
-            
-            // Save to localStorage
-            var leads = JSON.parse(localStorage.getItem('leads') || '[]');
-            leads.push({
-                phone: phone,
-                business: business,
-                date: new Date().toISOString(),
-                source: 'landing_page_v3'
-            });
-            localStorage.setItem('leads', JSON.stringify(leads));
-            
-            alert('Thanks! We\'ll call you within 24 hours to discuss your AI receptionist setup.');
-            this.reset();
-        });
-    </script>
+    <section id="problem">
+        <div class="section-header">
+            <div class="section-label">The Reality</div>
+            <h2 class="section-title">You're Working Harder Than Your Business</h2>
+        </div>
+        <div class="problem-grid">
+            <div class="problem-card">
+                <div class="problem-icon">⚡</div>
+                <h3>Manual Lead Gen</h3>
+                <p>You're still cold-calling, manually emailing, chasing prospects. 40% of your time goes to admin work that could be automated.</p>
+            </div>
+            <div class="problem-card">
+                <div class="problem-icon">📱</div>
+                <h3>Content Burnout</h3>
+                <p>Posting daily, creating content, staying relevant. It's a full-time job just to maintain visibility.</p>
+            </div>
+            <div class="problem-card">
+                <div class="problem-icon">💤</div>
+                <h3>Missed Opportunities</h3>
+                <p>While you sleep, eat, or actually work — leads come in and go cold. Your business stops when you stop.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="solution" class="solution">
+        <div class="solution-grid">
+            <div class="solution-content">
+                <div class="section-label">The Solution</div>
+                <h2>We Build Your AI Infrastructure</h2>
+                <p>Not chatbots. Not templates. Complete autonomous systems that handle lead capture, nurture sequences, content creation, and engagement — while you focus on what actually matters.</p>
+                <ul class="feature-list">
+                    <li>AI lead generation that runs 24/7</li>
+                    <li>Automated content creation & posting</li>
+                    <li>Smart follow-up sequences</li>
+                    <li>Real-time dashboard & analytics</li>
+                    <li>Full ownership — no SaaS dependencies</li>
+                </ul>
+            </div>
+            <div class="solution-visual">
+                <div style="font-family: 'Syne', sans-serif; font-size: 1.5rem; margin-bottom: 24px;">
+                    System Architecture
+                </div>
+                <div style="display: flex; flex-direction: column; gap: 16px;">
+                    <div style="padding: 16px; background: rgba(0,240,255,0.05); border-left: 3px solid var(--accent);">
+                        <div style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); margin-bottom: 4px;">Input</div>
+                        <div style="font-weight: 600;">Lead Capture Forms</div>
+                    </div>
+                    <div style="padding: 16px; background: rgba(0,240,255,0.05); border-left: 3px solid var(--accent);">
+                        <div style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); margin-bottom: 4px;">Process</div>
+                        <div style="font-weight: 600;">AI Qualification & Scoring</div>
+                    </div>
+                    <div style="padding: 16px; background: rgba(0,240,255,0.05); border-left: 3px solid var(--accent);">
+                        <div style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); margin-bottom: 4px;">Output</div>
+                        <div style="font-weight: 600;">Automated Nurture Sequences</div>
+                    </div>
+                    <div style="padding: 16px; background: rgba(255,149,0,0.05); border-left: 3px solid var(--amber);">
+                        <div style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--amber); margin-bottom: 4px;">Result</div>
+                        <div style="font-weight: 600;">Qualified Meetings Booked</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="cta">
+        <div class="section-label">Limited Availability</div>
+        <h2>Ready to Automate?</h2>
+        <p>We're accepting 3 new brand partners this month. Let's build your AI infrastructure.</p>
+        <form class="cta-form" action="#" method="POST">
+            <input type="tel" name="phone" placeholder="Your phone number" required>
+            <button type="submit">Get Started</button>
+        </form>
+    </section>
+
+    <footer>
+        <div class="footer-logo">NANA<span>.</span></div>
+        <ul class="footer-links">
+            <li><a href="#">Privacy</a></li>
+            <li><a href="#">Terms</a></li>
+            <li><a href="#">Contact</a></li>
+        </ul>
+    </footer>
 </body>
 </html>
