@@ -3,42 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Receptionist for Service Businesses — Never Miss a Call</title>
+    <title>AI Receptionist — Never Miss a Call</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     <style>
         :root {
-            --primary: #0071e3;
-            --primary-dark: #0077ed;
-            --text: #1d1d1f;
+            --bg: #000000;
+            --bg-elevated: #0a0a0a;
+            --bg-card: #111111;
+            --text: #ffffff;
             --text-secondary: #86868b;
-            --bg: #ffffff;
-            --bg-gray: #f5f5f7;
-            --border: #d2d2d7;
+            --accent: #2997ff;
+            --accent-glow: rgba(41, 151, 255, 0.3);
+            --border: #222222;
         }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-family: 'Inter', sans-serif;
             background: var(--bg);
             color: var(--text);
-            line-height: 1.47059;
-            font-weight: 400;
-            letter-spacing: -0.022em;
+            line-height: 1.5;
             overflow-x: hidden;
         }
-
-        /* Apple-style Navigation */
         nav {
             position: fixed;
             top: 0;
@@ -48,63 +36,18 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: rgba(255, 255, 255, 0.8);
-            backdrop-filter: saturate(180%) blur(20px);
-            -webkit-backdrop-filter: saturate(180%) blur(20px);
-            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
             z-index: 9999;
-            transition: all 0.3s ease;
         }
-
-        nav.scrolled {
-            background: rgba(255, 255, 255, 0.95);
-        }
-
-        .logo {
-            font-size: 21px;
-            font-weight: 600;
-            color: var(--text);
-            text-decoration: none;
-            letter-spacing: -0.5px;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 40px;
-            list-style: none;
-        }
-
-        .nav-links a {
-            color: var(--text);
-            text-decoration: none;
-            font-size: 12px;
-            font-weight: 400;
-            letter-spacing: -0.01em;
-            opacity: 0.8;
-            transition: opacity 0.3s ease;
-        }
-
-        .nav-links a:hover {
-            opacity: 1;
-        }
-
-        .nav-cta {
-            background: var(--primary);
-            color: white;
-            padding: 8px 16px;
-            border-radius: 980px;
-            text-decoration: none;
-            font-size: 12px;
-            font-weight: 400;
-            letter-spacing: -0.01em;
-            transition: all 0.3s ease;
-        }
-
-        .nav-cta:hover {
-            background: var(--primary-dark);
-        }
-
-        /* Hero Section - Apple Style */
+        .logo { font-size: 21px; font-weight: 600; color: var(--text); text-decoration: none; }
+        .logo span { color: var(--accent); }
+        .nav-links { display: flex; gap: 40px; list-style: none; }
+        .nav-links a { color: var(--text-secondary); text-decoration: none; font-size: 12px; transition: color 0.3s; }
+        .nav-links a:hover { color: var(--text); }
+        .nav-cta { background: var(--accent); color: white; padding: 8px 16px; border-radius: 980px; text-decoration: none; font-size: 12px; font-weight: 500; transition: all 0.3s; }
+        .nav-cta:hover { transform: scale(1.05); }
         .hero {
             min-height: 100vh;
             display: flex;
@@ -113,482 +56,124 @@
             align-items: center;
             text-align: center;
             padding: 120px 5% 80px;
-            position: relative;
-            overflow: hidden;
+            background: radial-gradient(ellipse at center, #1a1a2e 0%, #000000 70%);
         }
-
         .hero-badge {
             display: inline-flex;
             align-items: center;
             gap: 8px;
             padding: 8px 16px;
-            background: var(--bg-gray);
+            background: rgba(41, 151, 255, 0.1);
+            border: 1px solid rgba(41, 151, 255, 0.2);
             border-radius: 100px;
             font-size: 12px;
-            font-weight: 500;
-            color: var(--text-secondary);
-            margin-bottom: 24px;
-            opacity: 0;
-            transform: translateY(30px);
+            color: var(--accent);
+            margin-bottom: 32px;
         }
-
-        .hero-badge span {
-            width: 8px;
-            height: 8px;
-            background: var(--primary);
-            border-radius: 50%;
-        }
-
+        .hero-badge span { width: 8px; height: 8px; background: var(--accent); border-radius: 50%; animation: pulse 2s infinite; }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
         .hero h1 {
-            font-size: clamp(48px, 8vw, 96px);
+            font-size: clamp(48px, 10vw, 120px);
             font-weight: 700;
-            line-height: 1.05;
-            letter-spacing: -0.03em;
-            max-width: 900px;
+            line-height: 1;
+            max-width: 1000px;
             margin-bottom: 24px;
-            opacity: 0;
-            transform: translateY(40px);
-        }
-
-        .hero h1 .gradient-text {
-            background: linear-gradient(135deg, #0071e3 0%, #42a5f5 100%);
+            background: linear-gradient(180deg, #ffffff 0%, #86868b 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            background-clip: text;
         }
-
-        .hero-subtitle {
-            font-size: clamp(21px, 3vw, 28px);
-            font-weight: 400;
-            color: var(--text-secondary);
-            max-width: 680px;
-            margin-bottom: 40px;
-            line-height: 1.4;
-            opacity: 0;
-            transform: translateY(30px);
-        }
-
-        .hero-cta-group {
-            display: flex;
-            gap: 20px;
-            align-items: center;
-            opacity: 0;
-            transform: translateY(30px);
-        }
-
+        .hero-subtitle { font-size: clamp(18px, 2.5vw, 28px); color: var(--text-secondary); max-width: 600px; margin-bottom: 48px; }
+        .hero-cta-group { display: flex; gap: 20px; align-items: center; }
         .hero-cta-primary {
-            background: var(--primary);
+            background: var(--accent);
             color: white;
-            padding: 18px 32px;
+            padding: 18px 36px;
             border-radius: 980px;
             text-decoration: none;
             font-size: 17px;
-            font-weight: 400;
-            letter-spacing: -0.022em;
-            transition: all 0.3s ease;
-        }
-
-        .hero-cta-primary:hover {
-            background: var(--primary-dark);
-            transform: scale(1.02);
-        }
-
-        .hero-cta-secondary {
-            color: var(--primary);
-            text-decoration: none;
-            font-size: 17px;
-            font-weight: 400;
-            display: flex;
-            align-items: center;
-            gap: 4px;
-            transition: gap 0.3s ease;
-        }
-
-        .hero-cta-secondary:hover {
-            gap: 8px;
-        }
-
-        /* Scroll Indicator */
-        .scroll-indicator {
-            position: absolute;
-            bottom: 40px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 8px;
-            opacity: 0;
-        }
-
-        .scroll-indicator span {
-            font-size: 12px;
-            color: var(--text-secondary);
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-        }
-
-        .scroll-indicator::after {
-            content: '';
-            width: 1px;
-            height: 40px;
-            background: linear-gradient(to bottom, var(--text-secondary), transparent);
-            animation: scrollPulse 2s infinite;
-        }
-
-        @keyframes scrollPulse {
-            0%, 100% { opacity: 0.3; transform: scaleY(0.5); }
-            50% { opacity: 1; transform: scaleY(1); }
-        }
-
-        /* Section Base */
-        section {
-            padding: 160px 5%;
-            position: relative;
-        }
-
-        .section-header {
-            text-align: center;
-            max-width: 800px;
-            margin: 0 auto 80px;
-        }
-
-        .section-label {
-            font-size: 17px;
-            font-weight: 600;
-            color: var(--primary);
-            margin-bottom: 16px;
-            opacity: 0;
-            transform: translateY(20px);
-        }
-
-        .section-title {
-            font-size: clamp(40px, 6vw, 64px);
-            font-weight: 700;
-            line-height: 1.1;
-            letter-spacing: -0.03em;
-            margin-bottom: 24px;
-            opacity: 0;
-            transform: translateY(30px);
-        }
-
-        .section-subtitle {
-            font-size: 21px;
-            color: var(--text-secondary);
-            line-height: 1.5;
-            opacity: 0;
-            transform: translateY(20px);
-        }
-
-        /* Problem Section */
-        .problem {
-            background: var(--bg-gray);
-        }
-
-        .problem-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 24px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .problem-card {
-            background: white;
-            border-radius: 24px;
-            padding: 48px 32px;
-            text-align: center;
-            opacity: 0;
-            transform: translateY(40px);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .problem-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
-        }
-
-        .problem-icon {
-            width: 64px;
-            height: 64px;
-            background: var(--bg-gray);
-            border-radius: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 28px;
-            margin: 0 auto 24px;
-        }
-
-        .problem-card h3 {
-            font-size: 24px;
-            font-weight: 600;
-            margin-bottom: 12px;
-            letter-spacing: -0.02em;
-        }
-
-        .problem-card p {
-            font-size: 17px;
-            color: var(--text-secondary);
-            line-height: 1.5;
-        }
-
-        /* Solution Section */
-        .solution-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 80px;
-            max-width: 1200px;
-            margin: 0 auto;
-            align-items: center;
-        }
-
-        .solution-content {
-            opacity: 0;
-            transform: translateX(-40px);
-        }
-
-        .solution-content h2 {
-            font-size: clamp(32px, 4vw, 48px);
-            font-weight: 700;
-            line-height: 1.1;
-            letter-spacing: -0.03em;
-            margin-bottom: 24px;
-        }
-
-        .solution-content p {
-            font-size: 19px;
-            color: var(--text-secondary);
-            line-height: 1.6;
-            margin-bottom: 32px;
-        }
-
-        .feature-list {
-            list-style: none;
-        }
-
-        .feature-list li {
-            padding: 16px 0;
-            border-bottom: 1px solid var(--border);
-            font-size: 17px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            opacity: 0;
-            transform: translateX(-20px);
-        }
-
-        .feature-list li::before {
-            content: '✓';
-            width: 24px;
-            height: 24px;
-            background: var(--primary);
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 12px;
-            font-weight: 700;
-        }
-
-        .solution-visual {
-            background: var(--bg-gray);
-            border-radius: 32px;
-            padding: 48px;
-            position: relative;
-            opacity: 0;
-            transform: translateX(40px);
-            overflow: hidden;
-        }
-
-        .solution-visual::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, var(--primary), #42a5f5);
-        }
-
-        /* Stats Bar */
-        .stats-section {
-            background: var(--text);
-            color: white;
-            padding: 80px 5%;
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 48px;
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-
-        .stat-item {
-            text-align: center;
-            opacity: 0;
-            transform: translateY(30px);
-        }
-
-        .stat-number {
-            font-size: clamp(48px, 6vw, 72px);
-            font-weight: 700;
-            letter-spacing: -0.03em;
-            background: linear-gradient(135deg, #ffffff 0%, #86868b 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            display: block;
-            line-height: 1;
-        }
-
-        .stat-label {
-            font-size: 15px;
-            color: #86868b;
-            margin-top: 8px;
-            letter-spacing: 0.02em;
-        }
-
-        /* CTA Section */
-        .cta {
-            text-align: center;
-            background: linear-gradient(180deg, var(--bg-gray) 0%, var(--bg) 100%);
-        }
-
-        .cta h2 {
-            font-size: clamp(40px, 6vw, 64px);
-            font-weight: 700;
-            line-height: 1.1;
-            letter-spacing: -0.03em;
-            margin-bottom: 24px;
-            opacity: 0;
-            transform: translateY(30px);
-        }
-
-        .cta p {
-            font-size: 21px;
-            color: var(--text-secondary);
-            max-width: 600px;
-            margin: 0 auto 48px;
-            opacity: 0;
-            transform: translateY(20px);
-        }
-
-        .cta-form {
-            max-width: 480px;
-            margin: 0 auto;
-            display: flex;
-            gap: 12px;
-            opacity: 0;
-            transform: translateY(30px);
-        }
-
-        .cta-form input {
-            flex: 1;
-            background: white;
-            border: 1px solid var(--border);
-            padding: 18px 24px;
-            border-radius: 12px;
-            font-size: 17px;
-            font-family: inherit;
-            outline: none;
-            transition: border-color 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .cta-form input:focus {
-            border-color: var(--primary);
-            box-shadow: 0 0 0 4px rgba(0, 113, 227, 0.1);
-        }
-
-        .cta-form button {
-            background: var(--primary);
-            color: white;
-            border: none;
-            padding: 18px 32px;
-            border-radius: 12px;
-            font-size: 17px;
             font-weight: 500;
-            font-family: inherit;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            white-space: nowrap;
+            transition: all 0.3s;
+            box-shadow: 0 0 40px var(--accent-glow);
         }
-
-        .cta-form button:hover {
-            background: var(--primary-dark);
-            transform: scale(1.02);
-        }
-
-        /* Footer */
-        footer {
-            padding: 40px 5%;
-            border-top: 1px solid var(--border);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .footer-logo {
-            font-size: 21px;
-            font-weight: 600;
-        }
-
-        .footer-links {
-            display: flex;
-            gap: 32px;
-            list-style: none;
-        }
-
-        .footer-links a {
-            color: var(--text-secondary);
-            text-decoration: none;
-            font-size: 12px;
-            transition: color 0.3s ease;
-        }
-
-        .footer-links a:hover {
-            color: var(--text);
-        }
-
-        /* Responsive */
+        .hero-cta-primary:hover { transform: scale(1.05); box-shadow: 0 0 60px var(--accent-glow); }
+        .hero-cta-secondary { color: var(--accent); text-decoration: none; font-size: 17px; display: flex; align-items: center; gap: 4px; transition: gap 0.3s; }
+        .hero-cta-secondary:hover { gap: 8px; }
+        section { padding: 160px 5%; }
+        .section-header { text-align: center; max-width: 800px; margin: 0 auto 80px; }
+        .section-label { font-size: 14px; font-weight: 600; color: var(--accent); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 16px; }
+        .section-title { font-size: clamp(40px, 6vw, 72px); font-weight: 700; line-height: 1.1; margin-bottom: 24px; }
+        .section-subtitle { font-size: 21px; color: var(--text-secondary); }
+        .problem { background: var(--bg-elevated); }
+        .problem-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; max-width: 1200px; margin: 0 auto; }
+        .problem-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 24px; padding: 48px 32px; text-align: center; transition: all 0.3s; }
+        .problem-card:hover { border-color: var(--accent); transform: translateY(-8px); box-shadow: 0 20px 60px rgba(41, 151, 255, 0.1); }
+        .problem-icon { width: 64px; height: 64px; background: rgba(41, 151, 255, 0.1); border-radius: 20px; display: flex; align-items: center; justify-content: center; font-size: 28px; margin: 0 auto 24px; }
+        .problem-card h3 { font-size: 24px; font-weight: 600; margin-bottom: 12px; }
+        .problem-card p { color: var(--text-secondary); font-size: 16px; }
+        .solution-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; max-width: 1200px; margin: 0 auto; align-items: center; }
+        .solution-content h2 { font-size: clamp(32px, 4vw, 56px); font-weight: 700; line-height: 1.1; margin-bottom: 24px; }
+        .solution-content p { color: var(--text-secondary); font-size: 19px; margin-bottom: 32px; }
+        .feature-list { list-style: none; }
+        .feature-list li { padding: 16px 0; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 12px; }
+        .feature-list li::before { content: '→'; color: var(--accent); font-weight: 700; }
+        .solution-visual { background: var(--bg-card); border: 1px solid var(--border); border-radius: 32px; padding: 48px; }
+        .stats-section { background: var(--bg-elevated); padding: 120px 5%; }
+        .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 48px; max-width: 1000px; margin: 0 auto; }
+        .stat-item { text-align: center; }
+        .stat-number { font-size: clamp(48px, 6vw, 72px); font-weight: 700; background: linear-gradient(135deg, var(--accent) 0%, #bf5af2 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; display: block; }
+        .stat-label { font-size: 14px; color: var(--text-secondary); margin-top: 8px; }
+        .cta { text-align: center; background: radial-gradient(ellipse at center, #1a1a2e 0%, #000000 70%); }
+        .cta h2 { font-size: clamp(40px, 6vw, 72px); font-weight: 700; margin-bottom: 24px; }
+        .cta p { color: var(--text-secondary); font-size: 21px; max-width: 600px; margin: 0 auto 48px; }
+        .cta-form { max-width: 480px; margin: 0 auto; display: flex; gap: 12px; }
+        .cta-form input { flex: 1; background: var(--bg-card); border: 1px solid var(--border); padding: 18px 24px; border-radius: 12px; color: var(--text); font-size: 17px; outline: none; }
+        .cta-form input:focus { border-color: var(--accent); box-shadow: 0 0 0 4px var(--accent-glow); }
+        .cta-form button { background: var(--accent); color: white; border: none; padding: 18px 32px; border-radius: 12px; font-size: 17px; font-weight: 500; cursor: pointer; transition: all 0.3s; }
+        .cta-form button:hover { transform: scale(1.02); box-shadow: 0 0 40px var(--accent-glow); }
+        footer { padding: 40px 5%; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+        .footer-logo { font-size: 21px; font-weight: 600; }
+        .footer-logo span { color: var(--accent); }
+        .footer-links { display: flex; gap: 32px; list-style: none; }
+        .footer-links a { color: var(--text-secondary); text-decoration: none; font-size: 12px; transition: color 0.3s; }
+        .footer-links a:hover { color: var(--text); }
+        .chat-widget { position: fixed; bottom: 24px; right: 24px; width: 380px; max-height: 600px; background: var(--bg-card); border: 1px solid var(--border); border-radius: 24px; box-shadow: 0 25px 80px rgba(0, 0, 0, 0.8); z-index: 10000; display: flex; flex-direction: column; overflow: hidden; }
+        .chat-widget.minimized { display: none; }
+        .chat-header { padding: 20px 24px; background: var(--bg-elevated); border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+        .chat-header-left { display: flex; align-items: center; gap: 12px; }
+        .chat-avatar { width: 40px; height: 40px; background: linear-gradient(135deg, var(--accent), #bf5af2); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 18px; }
+        .chat-header-info h4 { font-size: 16px; font-weight: 600; }
+        .chat-header-info span { font-size: 12px; color: #34c759; display: flex; align-items: center; gap: 4px; }
+        .chat-header-info span::before { content: ''; width: 6px; height: 6px; background: #34c759; border-radius: 50%; }
+        .chat-toggle { background: none; border: none; color: var(--text); font-size: 20px; cursor: pointer; }
+        .chat-messages { flex: 1; overflow-y: auto; padding: 24px; display: flex; flex-direction: column; gap: 16px; max-height: 400px; }
+        .message { max-width: 80%; padding: 16px 20px; border-radius: 20px; font-size: 14px; line-height: 1.5; animation: messageSlide 0.3s ease; }
+        @keyframes messageSlide { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .message.bot { background: var(--bg-elevated); align-self: flex-start; border-bottom-left-radius: 4px; }
+        .message.user { background: var(--accent); align-self: flex-end; border-bottom-right-radius: 4px; }
+        .chat-input { padding: 20px 24px; border-top: 1px solid var(--border); display: flex; gap: 12px; }
+        .chat-input input { flex: 1; background: var(--bg-elevated); border: 1px solid var(--border); padding: 14px 18px; border-radius: 12px; color: var(--text); font-size: 14px; outline: none; }
+        .chat-input input:focus { border-color: var(--accent); }
+        .chat-input button { background: var(--accent); border: none; color: white; width: 44px; height: 44px; border-radius: 12px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.3s; }
+        .chat-input button:hover { transform: scale(1.05); }
+        .chat-fab { position: fixed; bottom: 24px; right: 24px; width: 64px; height: 64px; background: linear-gradient(135deg, var(--accent), #bf5af2); border-radius: 50%; border: none; color: white; font-size: 24px; cursor: pointer; box-shadow: 0 10px 40px var(--accent-glow); z-index: 10000; display: flex; align-items: center; justify-content: center; transition: all 0.3s; }
+        .chat-fab:hover { transform: scale(1.1); }
         @media (max-width: 1024px) {
-            .problem-grid {
-                grid-template-columns: 1fr;
-            }
-            .solution-grid {
-                grid-template-columns: 1fr;
-                gap: 48px;
-            }
-            .stats-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
+            .problem-grid { grid-template-columns: 1fr; }
+            .solution-grid { grid-template-columns: 1fr; gap: 48px; }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
         }
-
         @media (max-width: 768px) {
-            .nav-links {
-                display: none;
-            }
-            .stats-grid {
-                grid-template-columns: 1fr;
-            }
-            .hero-cta-group {
-                flex-direction: column;
-            }
-            .cta-form {
-                flex-direction: column;
-            }
-            section {
-                padding: 100px 5%;
-            }
+            .nav-links { display: none; }
+            .stats-grid { grid-template-columns: 1fr; }
+            .hero-cta-group { flex-direction: column; }
+            .cta-form { flex-direction: column; }
+            .chat-widget { width: calc(100% - 48px); right: 24px; left: 24px; }
         }
     </style>
 </head>
 <body>
     <nav id="navbar">
-        <a href="#" class="logo">AI Receptionist</a>
+        <a href="#" class="logo">AI<span>.</span>Receptionist</a>
         <ul class="nav-links">
             <li><a href="#problem">Problem</a></li>
             <li><a href="#solution">Solution</a></li>
@@ -598,50 +183,36 @@
     </nav>
 
     <section class="hero">
-        <div class="hero-badge">
-            <span></span>
-            Now Serving Houston Area
-        </div>
-        <h1>
-            Never Miss a
-            <span class="gradient-text">Revenue Call</span>
-            Again
-        </h1>
-        <p class="hero-subtitle">
-            AI-powered receptionist for service businesses. Answers calls 24/7, books appointments, and captures leads while you focus on the work that matters.
-        </p>
+        <div class="hero-badge"><span></span>Now Serving Houston Area</div>
+        <h1>Never Miss a Call Again</h1>
+        <p class="hero-subtitle">AI-powered receptionist that answers 24/7, captures leads, and books appointments while you focus on growing your business.</p>
         <div class="hero-cta-group">
             <a href="#contact" class="hero-cta-primary">Start Free Trial</a>
-            <a href="#solution" class="hero-cta-secondary">See how it works →</a>
-        </div>
-        <div class="scroll-indicator">
-            <span>Scroll</span>
+            <a href="#solution" class="hero-cta-secondary">See How It Works →</a>
         </div>
     </section>
 
     <section class="problem" id="problem">
         <div class="section-header">
             <div class="section-label">The Problem</div>
-            <h2 class="section-title">Every Missed Call Is Lost Revenue</h2>
-            <p class="section-subtitle">
-                Service businesses lose 35% of potential customers to voicemails and missed calls. The competition isn't waiting.
-            </p>
+            <h2 class="section-title">Missed Calls = Lost Revenue</h2>
+            <p class="section-subtitle">35% of potential customers hang up when they reach voicemail. Your competitors are answering.</p>
         </div>
         <div class="problem-grid">
             <div class="problem-card">
                 <div class="problem-icon">📞</div>
-                <h3>Missed Calls</h3>
-                <p>You're on a job, driving, or with family. Potential customers call competitors who answer immediately.</p>
+                <h3>You're On the Job</h3>
+                <p>Working with a client? Driving? With family? Missed calls go straight to competitors.</p>
             </div>
             <div class="problem-card">
-                <div class="problem-icon">⏰</div>
+                <div class="problem-icon">🌙</div>
                 <h3>After Hours</h3>
-                <p>67% of service calls happen outside business hours. Voicemail means they'll call someone else.</p>
+                <p>67% of service inquiries happen evenings and weekends. Voicemail isn't good enough.</p>
             </div>
             <div class="problem-card">
-                <div class="problem-icon">💰</div>
+                <div class="problem-icon">💸</div>
                 <h3>Lost Revenue</h3>
-                <p>Each missed call costs $500-2000 in lifetime value. For busy businesses, that's thousands per month.</p>
+                <p>Each missed call costs $500-2000. For busy businesses, that's thousands monthly.</p>
             </div>
         </div>
     </section>
@@ -650,41 +221,30 @@
         <div class="solution-grid">
             <div class="solution-content">
                 <div class="section-label">The Solution</div>
-                <h2>Your AI Receptionist Never Sleeps</h2>
-                <p>
-                    A professional AI assistant that answers every call, captures lead details, books appointments, and sends you qualified prospects—24 hours a day, 7 days a week.
-                </p>
+                <h2>Your AI Never Sleeps</h2>
+                <p>Professional AI receptionist answers every call, captures detailed lead information, books appointments, and sends you qualified prospects instantly.</p>
                 <ul class="feature-list">
-                    <li>Answers calls instantly, 24/7</li>
+                    <li>Answers calls 24/7 with professional voice</li>
                     <li>Captures name, number, and service needs</li>
                     <li>Books appointments directly to your calendar</li>
-                    <li>Texts you lead details immediately</li>
-                    <li>Professional, friendly voice your customers trust</li>
+                    <li>Texts you lead details in real-time</li>
+                    <li>Qualifies prospects before you call back</li>
                 </ul>
             </div>
             <div class="solution-visual">
-                <div style="font-weight: 600; font-size: 18px; margin-bottom: 24px;">How It Works</div>
+                <div style="font-weight: 600; font-size: 18px; margin-bottom: 24px; color: var(--accent);">How It Works</div>
                 <div style="display: flex; flex-direction: column; gap: 16px;">
-                    <div style="display: flex; align-items: center; gap: 16px; padding: 20px; background: white; border-radius: 16px;">
-                        <div style="width: 40px; height: 40px; background: var(--primary); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 600;">1</div>
-                        <div>
-                            <div style="font-weight: 600;">Customer Calls</div>
-                            <div style="font-size: 14px; color: var(--text-secondary);">Any time, day or night</div>
-                        </div>
+                    <div style="display: flex; align-items: center; gap: 16px; padding: 20px; background: var(--bg-elevated); border-radius: 16px; border: 1px solid var(--border);">
+                        <div style="width: 40px; height: 40px; background: var(--accent); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 600;">1</div>
+                        <div><div style="font-weight: 600;">Customer Calls You</div><div style="font-size: 14px; color: var(--text-secondary);">Any time, day or night</div></div>
                     </div>
-                    <div style="display: flex; align-items: center; gap: 16px; padding: 20px; background: white; border-radius: 16px;">
-                        <div style="width: 40px; height: 40px; background: var(--primary); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 600;">2</div>
-                        <div>
-                            <div style="font-weight: 600;">AI Answers Instantly</div>
-                            <div style="font-size: 14px; color: var(--text-secondary);">Professional, friendly voice</div>
-                        </div>
+                    <div style="display: flex; align-items: center; gap: 16px; padding: 20px; background: var(--bg-elevated); border-radius: 16px; border: 1px solid var(--border);">
+                        <div style="width: 40px; height: 40px; background: var(--accent); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 600;">2</div>
+                        <div><div style="font-weight: 600;">AI Answers Instantly</div><div style="font-size: 14px; color: var(--text-secondary);">Friendly, professional voice</div></div>
                     </div>
-                    <div style="display: flex; align-items: center; gap: 16px; padding: 20px; background: white; border-radius: 16px;">
-                        <div style="width: 40px; height: 40px; background: var(--primary); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 600;">3</div>
-                        <div>
-                            <div style="font-weight: 600;">You Get the Lead</div>
-                            <div style="font-size: 14px; color: var(--text-secondary);">Texted to you immediately</div>
-                        </div>
+                    <div style="display: flex; align-items: center; gap: 16px; padding: 20px; background: var(--bg-elevated); border-radius: 16px; border: 1px solid var(--border);">
+                        <div style="width: 40px; height: 40px; background: var(--accent); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 600;">3</div>
+                        <div><div style="font-weight: 600;">You Get the Lead</div><div style="font-size: 14px; color: var(--text-secondary);">Texted to you immediately</div></div>
                     </div>
                 </div>
             </div>
@@ -693,37 +253,25 @@
 
     <section class="stats-section" id="results">
         <div class="stats-grid">
-            <div class="stat-item">
-                <span class="stat-number">24/7</span>
-                <div class="stat-label">Always Available</div>
-            </div>
-            <div class="stat-item">
-                <span class="stat-number">100%</span>
-                <div class="stat-label">Calls Answered</div>
-            </div>
-            <div class="stat-item">
-                <span class="stat-number">3min</span>
-                <div class="stat-label">Avg. Response Time</div>
-            </div>
-            <div class="stat-item">
-                <span class="stat-number">$0</span>
-                <div class="stat-label">Setup Fee</div>
-            </div>
+            <div class="stat-item"><span class="stat-number">24/7</span><div class="stat-label">Always On</div></div>
+            <div class="stat-item"><span class="stat-number">100%</span><div class="stat-label">Answer Rate</div></div>
+            <div class="stat-item"><span class="stat-number">&lt;3s</span><div class="stat-label">Response Time</div></div>
+            <div class="stat-item"><span class="stat-number">\$0</span><div class="stat-label">Setup Fee</div></div>
         </div>
     </section>
 
     <section class="cta" id="contact">
         <div class="section-label">Get Started</div>
         <h2>Start Capturing Every Lead</h2>
-        <p>Join Houston service businesses already using AI Receptionist. Limited spots available.</p>
-        <form class="cta-form" action="#" method="POST">
-            <input type="tel" name="phone" placeholder="Your phone number" required>
+        <p>Join Houston businesses using AI Receptionist. Limited spots for personalized onboarding.</p>
+        <form class="cta-form" onsubmit="event.preventDefault(); alert('Thanks! We will call you within 24 hours.');">
+            <input type="tel" name="phone" placeholder="Enter your phone number" required>
             <button type="submit">Get Started</button>
         </form>
     </section>
 
     <footer>
-        <div class="footer-logo">AI Receptionist</div>
+        <div class="footer-logo">AI<span>.</span>Receptionist</div>
         <ul class="footer-links">
             <li><a href="#">Privacy</a></li>
             <li><a href="#">Terms</a></li>
@@ -731,220 +279,71 @@
         </ul>
     </footer>
 
+    <!-- Chatbot -->
+    <div class="chat-widget" id="chatWidget">
+        <div class="chat-header">
+            <div class="chat-header-left">
+                <div class="chat-avatar">🤖</div>
+                <div class="chat-header-info">
+                    <h4>AI Assistant</h4>
+                    <span>Online now</span>
+                </div>
+            </div>
+            <button class="chat-toggle" onclick="document.getElementById('chatWidget').style.display='none';document.getElementById('chatFab').style.display='flex';">−</button>
+        </div>
+        <div class="chat-messages" id="chatMessages">
+            <div class="message bot">Hi! I can answer questions about our AI Receptionist or help you get started. What would you like to know?</div>
+        </div>
+        <div class="chat-input">
+            <input type="text" id="chatInput" placeholder="Type your message..." onkeypress="if(event.key==='Enter')sendMessage()">
+            <button onclick="sendMessage()">→</button>
+        </div>
+    </div>
+
+    <button class="chat-fab" id="chatFab" onclick="document.getElementById('chatWidget').style.display='flex';document.getElementById('chatFab').style.display='none';" style="display:none;">💬</button>
+
     <script>
-        // Register ScrollTrigger
         gsap.registerPlugin(ScrollTrigger);
+        
+        // Hero animations
+        gsap.from('.hero-badge', { opacity: 0, y: 20, duration: 0.8, delay: 0.2 });
+        gsap.from('.hero h1', { opacity: 0, y: 30, duration: 1, delay: 0.4 });
+        gsap.from('.hero-subtitle', { opacity: 0, y: 20, duration: 0.8, delay: 0.6 });
+        gsap.from('.hero-cta-group', { opacity: 0, y: 20, duration: 0.8, delay: 0.8 });
 
-        // Navbar scroll effect
-        const navbar = document.getElementById('navbar');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 50) {
-                navbar.classList.add('scrolled');
-            } else {
-                navbar.classList.remove('scrolled');
-            }
+        // Scroll animations
+        gsap.utils.toArray('.section-label').forEach(el => {
+            gsap.from(el, { opacity: 0, y: 20, duration: 0.6, scrollTrigger: { trigger: el, start: 'top 80%' } });
         });
+        gsap.utils.toArray('.section-title').forEach(el => {
+            gsap.from(el, { opacity: 0, y: 30, duration: 0.8, scrollTrigger: { trigger: el, start: 'top 80%' } });
+        });
+        gsap.from('.problem-card', { opacity: 0, y: 40, duration: 0.8, stagger: 0.15, scrollTrigger: { trigger: '.problem-grid', start: 'top 75%' } });
+        gsap.from('.solution-content', { opacity: 0, x: -40, duration: 1, scrollTrigger: { trigger: '.solution-grid', start: 'top 70%' } });
+        gsap.from('.solution-visual', { opacity: 0, x: 40, duration: 1, delay: 0.2, scrollTrigger: { trigger: '.solution-grid', start: 'top 70%' } });
+        gsap.from('.stat-item', { opacity: 0, y: 30, duration: 0.8, stagger: 0.1, scrollTrigger: { trigger: '.stats-grid', start: 'top 75%' } });
 
-        // Hero animations on load
-        gsap.to('.hero-badge', {
-            opacity: 1,
-            y: 0,
-            duration: 0.8,
-            ease: 'power3.out',
-            delay: 0.2
-        });
-
-        gsap.to('.hero h1', {
-            opacity: 1,
-            y: 0,
-            duration: 1,
-            ease: 'power3.out',
-            delay: 0.4
-        });
-
-        gsap.to('.hero-subtitle', {
-            opacity: 1,
-            y: 0,
-            duration: 0.8,
-            ease: 'power3.out',
-            delay: 0.6
-        });
-
-        gsap.to('.hero-cta-group', {
-            opacity: 1,
-            y: 0,
-            duration: 0.8,
-            ease: 'power3.out',
-            delay: 0.8
-        });
-
-        gsap.to('.scroll-indicator', {
-            opacity: 1,
-            duration: 1,
-            delay: 1.2
-        });
-
-        // Section headers animation
-        gsap.utils.toArray('.section-label').forEach(label => {
-            gsap.to(label, {
-                opacity: 1,
-                y: 0,
-                duration: 0.6,
-                ease: 'power3.out',
-                scrollTrigger: {
-                    trigger: label,
-                    start: 'top 80%',
-                    toggleActions: 'play none none reverse'
-                }
-            });
-        });
-
-        gsap.utils.toArray('.section-title').forEach(title => {
-            gsap.to(title, {
-                opacity: 1,
-                y: 0,
-                duration: 0.8,
-                ease: 'power3.out',
-                scrollTrigger: {
-                    trigger: title,
-                    start: 'top 80%',
-                    toggleActions: 'play none none reverse'
-                }
-            });
-        });
-
-        gsap.utils.toArray('.section-subtitle').forEach(subtitle => {
-            gsap.to(subtitle, {
-                opacity: 1,
-                y: 0,
-                duration: 0.6,
-                ease: 'power3.out',
-                scrollTrigger: {
-                    trigger: subtitle,
-                    start: 'top 80%',
-                    toggleActions: 'play none none reverse'
-                }
-            });
-        });
-
-        // Problem cards stagger animation
-        gsap.to('.problem-card', {
-            opacity: 1,
-            y: 0,
-            duration: 0.8,
-            ease: 'power3.out',
-            stagger: 0.15,
-            scrollTrigger: {
-                trigger: '.problem-grid',
-                start: 'top 75%',
-                toggleActions: 'play none none reverse'
-            }
-        });
-
-        // Solution section animations
-        gsap.to('.solution-content', {
-            opacity: 1,
-            x: 0,
-            duration: 1,
-            ease: 'power3.out',
-            scrollTrigger: {
-                trigger: '.solution-grid',
-                start: 'top 70%',
-                toggleActions: 'play none none reverse'
-            }
-        });
-
-        gsap.to('.solution-visual', {
-            opacity: 1,
-            x: 0,
-            duration: 1,
-            ease: 'power3.out',
-            delay: 0.2,
-            scrollTrigger: {
-                trigger: '.solution-grid',
-                start: 'top 70%',
-                toggleActions: 'play none none reverse'
-            }
-        });
-
-        // Feature list stagger
-        gsap.to('.feature-list li', {
-            opacity: 1,
-            x: 0,
-            duration: 0.6,
-            ease: 'power3.out',
-            stagger: 0.1,
-            scrollTrigger: {
-                trigger: '.feature-list',
-                start: 'top 80%',
-                toggleActions: 'play none none reverse'
-            }
-        });
-
-        // Stats counter animation
-        gsap.to('.stat-item', {
-            opacity: 1,
-            y: 0,
-            duration: 0.8,
-            ease: 'power3.out',
-            stagger: 0.1,
-            scrollTrigger: {
-                trigger: '.stats-grid',
-                start: 'top 75%',
-                toggleActions: 'play none none reverse'
-            }
-        });
-
-        // CTA section animations
-        gsap.to('.cta h2', {
-            opacity: 1,
-            y: 0,
-            duration: 0.8,
-            ease: 'power3.out',
-            scrollTrigger: {
-                trigger: '.cta',
-                start: 'top 70%',
-                toggleActions: 'play none none reverse'
-            }
-        });
-
-        gsap.to('.cta p', {
-            opacity: 1,
-            y: 0,
-            duration: 0.6,
-            ease: 'power3.out',
-            delay: 0.1,
-            scrollTrigger: {
-                trigger: '.cta',
-                start: 'top 70%',
-                toggleActions: 'play none none reverse'
-            }
-        });
-
-        gsap.to('.cta-form', {
-            opacity: 1,
-            y: 0,
-            duration: 0.8,
-            ease: 'power3.out',
-            delay: 0.2,
-            scrollTrigger: {
-                trigger: '.cta',
-                start: 'top 70%',
-                toggleActions: 'play none none reverse'
-            }
-        });
-
-        // Parallax effect on hero
-        gsap.to('.hero', {
-            yPercent: 20,
-            ease: 'none',
-            scrollTrigger: {
-                trigger: '.hero',
-                start: 'top top',
-                end: 'bottom top',
-                scrub: true
-            }
-        });
+        // Chatbot
+        function sendMessage() {
+            const input = document.getElementById('chatInput');
+            const msg = input.value.trim();
+            if (!msg) return;
+            
+            const messages = document.getElementById('chatMessages');
+            messages.innerHTML += '<div class="message user">' + msg + '</div>';
+            input.value = '';
+            messages.scrollTop = messages.scrollHeight;
+            
+            setTimeout(() => {
+                let reply = "Great question! Our AI Receptionist handles calls 24/7. Would you like to start a free trial or schedule a demo?";
+                const lower = msg.toLowerCase();
+                if (lower.includes('price') || lower.includes('cost')) reply = "We start at $97/month based on call volume. Want a custom quote?";
+                else if (lower.includes('trial')) reply = "Yes! 14-day free trial, no credit card needed. Ready to start?";
+                else if (lower.includes('work')) reply = "Our AI answers calls, captures leads, books appointments. Want to see how?";
+                messages.innerHTML += '<div class="message bot">' + reply + '</div>';
+                messages.scrollTop = messages.scrollHeight;
+            }, 800);
+        }
     </script>
 </body>
 </html>
